@@ -114,14 +114,11 @@ class DeepLinkingMobilePage extends Component<Props> {
         return (
             <div className={_SNS}>
                 <div className="header">
-                    <img className="logo" src="images/logo-deep-linking.png" />
+                    <img className="logo" src="images/aclogo512-t.png" />
                 </div>
                 <div className={`${_SNS}__body`}>
                     {SHOW_DEEP_LINKING_IMAGE ? (
-                        <img
-                            className="image"
-                            src="images/deep-linking-image.png"
-                        />
+                        <img className="image" src="images/aclogo512-t.png" />
                     ) : null}
                     <p className={`${_SNS}__text`}>
                         {t(`${_TNS}.appNotInstalled`, { app: NATIVE_APP_NAME })}
