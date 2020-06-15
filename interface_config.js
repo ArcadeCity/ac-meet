@@ -28,7 +28,7 @@ var interfaceConfig = {
     DISPLAY_WELCOME_PAGE_CONTENT: true,
     DISPLAY_WELCOME_PAGE_TOOLBAR_ADDITIONAL_CONTENT: false,
     APP_NAME: "Arcade City Meet",
-    NATIVE_APP_NAME: "Arcade City Meet",
+    NATIVE_APP_NAME: "Arcade City",
     PROVIDER_NAME: "Arcade City",
     LANG_DETECTION: true, // Allow i18n to detect the system language
     INVITATION_POWERED_BY: true,

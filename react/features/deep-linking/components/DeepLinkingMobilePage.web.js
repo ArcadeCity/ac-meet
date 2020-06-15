@@ -1,18 +1,18 @@
 // @flow
 
-import React, { Component } from 'react';
-import type { Dispatch } from 'redux';
+import React, { Component } from "react";
+import type { Dispatch } from "redux";
 
-import { createDeepLinkingPageEvent, sendAnalytics } from '../../analytics';
-import { isSupportedMobileBrowser } from '../../base/environment';
-import { translate } from '../../base/i18n';
-import { Platform } from '../../base/react';
-import { connect } from '../../base/redux';
-import { DialInSummary } from '../../invite';
-import { openWebApp } from '../actions';
-import { _TNS } from '../constants';
-import { generateDeepLinkingURL } from '../functions';
-import { renderPromotionalFooter } from '../renderPromotionalFooter';
+import { createDeepLinkingPageEvent, sendAnalytics } from "../../analytics";
+import { isSupportedMobileBrowser } from "../../base/environment";
+import { translate } from "../../base/i18n";
+import { Platform } from "../../base/react";
+import { connect } from "../../base/redux";
+import { DialInSummary } from "../../invite";
+import { openWebApp } from "../actions";
+import { _TNS } from "../constants";
+import { generateDeepLinkingURL } from "../functions";
+import { renderPromotionalFooter } from "../renderPromotionalFooter";
 
 declare var interfaceConfig: Object;
 
@@ -22,14 +22,13 @@ declare var interfaceConfig: Object;
  * @private
  * @type {string}
  */
-const _SNS = 'deep-linking-mobile';
+const _SNS = "deep-linking-mobile";
 
 /**
  * The type of the React {@code Component} props of
  * {@link DeepLinkingMobilePage}.
  */
 type Props = {
-
     /**
      * Application download URL.
      */
@@ -48,7 +47,7 @@ type Props = {
     /**
      * The function to translate human-readable text.
      */
-    t: Function
+    t: Function,
 };
 
 /**
@@ -79,8 +78,10 @@ class DeepLinkingMobilePage extends Component<Props> {
      */
     componentDidMount() {
         sendAnalytics(
-            createDeepLinkingPageEvent(
-                'displayed', 'DeepLinkingMobile', { isMobileBrowser: true }));
+            createDeepLinkingPageEvent("displayed", "DeepLinkingMobile", {
+                isMobileBrowser: true,
+            })
+        );
     }
 
     /**
@@ -92,84 +93,76 @@ class DeepLinkingMobilePage extends Component<Props> {
     render() {
         const { _downloadUrl, _room, t } = this.props;
         const { NATIVE_APP_NAME, SHOW_DEEP_LINKING_IMAGE } = interfaceConfig;
-        const downloadButtonClassName
-            = `${_SNS}__button ${_SNS}__button_primary`;
-
+        const downloadButtonClassName = `${_SNS}__button ${_SNS}__button_primary`;
 
         const onOpenLinkProperties = _downloadUrl
             ? {
-                // When opening a link to the download page, we want to let the
-                // OS itself handle intercepting and opening the appropriate
-                // app store. This avoids potential issues with browsers, such
-                // as iOS Chrome, not opening the store properly.
-            }
+                  // When opening a link to the download page, we want to let the
+                  // OS itself handle intercepting and opening the appropriate
+                  // app store. This avoids potential issues with browsers, such
+                  // as iOS Chrome, not opening the store properly.
+              }
             : {
-                // When falling back to another URL (Firebase) let the page be
-                // opened in a new window. This helps prevent the user getting
-                // trapped in an app-open-cycle where going back to the mobile
-                // browser re-triggers the app-open behavior.
-                target: '_blank',
-                rel: 'noopener noreferrer'
-            };
+                  // When falling back to another URL (Firebase) let the page be
+                  // opened in a new window. This helps prevent the user getting
+                  // trapped in an app-open-cycle where going back to the mobile
+                  // browser re-triggers the app-open behavior.
+                  target: "_blank",
+                  rel: "noopener noreferrer",
+              };
 
         return (
-            <div className = { _SNS }>
-                <div className = 'header'>
-                    <img
-                        className = 'logo'
-                        src = 'images/logo-deep-linking.png' />
+            <div className={_SNS}>
+                <div className="header">
+                    <img className="logo" src="images/aclogo512-t.png" />
                 </div>
-                <div className = { `${_SNS}__body` }>
-                    {
-                        SHOW_DEEP_LINKING_IMAGE
-                            ? <img
-                                className = 'image'
-                                src = 'images/deep-linking-image.png' />
-                            : null
-                    }
-                    <p className = { `${_SNS}__text` }>
-                        { t(`${_TNS}.appNotInstalled`, { app: NATIVE_APP_NAME }) }
+                <div className={`${_SNS}__body`}>
+                    {SHOW_DEEP_LINKING_IMAGE ? (
+                        <img className="image" src="images/aclogo512-t.png" />
+                    ) : null}
+                    <p className={`${_SNS}__text`}>
+                        {t(`${_TNS}.appNotInstalled`, { app: NATIVE_APP_NAME })}
                     </p>
-                    <p className = { `${_SNS}__text` }>
-                        { t(`${_TNS}.ifHaveApp`) }
-                    </p>
+                    <p className={`${_SNS}__text`}>{t(`${_TNS}.ifHaveApp`)}</p>
                     <a
-                        { ...onOpenLinkProperties }
-                        className = { `${_SNS}__href` }
-                        href = { generateDeepLinkingURL() }
-                        onClick = { this._onOpenApp }
-                        target = '_top'>
-                        <button className = { `${_SNS}__button ${_SNS}__button_primary` }>
-                            { t(`${_TNS}.joinInApp`) }
+                        {...onOpenLinkProperties}
+                        className={`${_SNS}__href`}
+                        href={generateDeepLinkingURL()}
+                        onClick={this._onOpenApp}
+                        target="_top"
+                    >
+                        <button
+                            className={`${_SNS}__button ${_SNS}__button_primary`}
+                        >
+                            {t(`${_TNS}.joinInApp`)}
                         </button>
                     </a>
-                    <p className = { `${_SNS}__text` }>
-                        { t(`${_TNS}.ifDoNotHaveApp`) }
+                    <p className={`${_SNS}__text`}>
+                        {t(`${_TNS}.ifDoNotHaveApp`)}
                     </p>
                     <a
-                        { ...onOpenLinkProperties }
-                        href = { this._generateDownloadURL() }
-                        onClick = { this._onDownloadApp }
-                        target = '_top'>
-                        <button className = { downloadButtonClassName }>
-                            { t(`${_TNS}.downloadApp`) }
+                        {...onOpenLinkProperties}
+                        href={this._generateDownloadURL()}
+                        onClick={this._onDownloadApp}
+                        target="_top"
+                    >
+                        <button className={downloadButtonClassName}>
+                            {t(`${_TNS}.downloadApp`)}
                         </button>
                     </a>
-                    {
-                        isSupportedMobileBrowser()
-                            && <a
-                                onClick = { this._onLaunchWeb }
-                                target = '_top'>
-                                <button className = { downloadButtonClassName }>
-                                    { t(`${_TNS}.launchWebButton`) }
-                                </button>
-                            </a>
-                    }
-                    { renderPromotionalFooter() }
+                    {isSupportedMobileBrowser() && (
+                        <a onClick={this._onLaunchWeb} target="_top">
+                            <button className={downloadButtonClassName}>
+                                {t(`${_TNS}.launchWebButton`)}
+                            </button>
+                        </a>
+                    )}
+                    {renderPromotionalFooter()}
                     <DialInSummary
-                        className = 'deep-linking-dial-in'
-                        clickableNumbers = { true }
-                        room = { _room } />
+                        className="deep-linking-dial-in"
+                        clickableNumbers={true}
+                        room={_room}
+                    />
                 </div>
             </div>
         );
@@ -184,7 +177,7 @@ class DeepLinkingMobilePage extends Component<Props> {
     _generateDownloadURL() {
         const { _downloadUrl: url } = this.props;
 
-        if (url && typeof interfaceConfig.MOBILE_DYNAMIC_LINK === 'undefined') {
+        if (url && typeof interfaceConfig.MOBILE_DYNAMIC_LINK === "undefined") {
             return url;
         }
 
@@ -192,22 +185,20 @@ class DeepLinkingMobilePage extends Component<Props> {
         // interfaceConfig.MOBILE_DYNAMIC_LINK check:
         // https://firebase.google.com/docs/dynamic-links/create-manually
         const {
-            APN = 'org.jitsi.meet',
-            APP_CODE = 'w2atb',
+            APN = "arcade.city.mobile", // TODO: The app must be connected to your project from the Overview page of the Firebase console.
+            APP_CODE = "w2atb",
             CUSTOM_DOMAIN = undefined,
-            IBI = 'com.atlassian.JitsiMeet.ios',
-            ISI = '1165103905'
+            IBI = "arcade.city.mobile",
+            ISI = "1082799882",
         } = interfaceConfig.MOBILE_DYNAMIC_LINK || {};
 
-        const domain = CUSTOM_DOMAIN ?? `https://${APP_CODE}.app.goo.gl`;
-        const IUS = interfaceConfig.APP_SCHEME || 'org.jitsi.meet';
+        // const domain = CUSTOM_DOMAIN ?? `https://${APP_CODE}.app.goo.gl`;
+        const domain = "https://link.arcade.city/app";
+        const IUS = interfaceConfig.APP_SCHEME || "arcade.city.mobile";
 
-        return `${domain}/?link=${
-            encodeURIComponent(window.location.href)}&apn=${
-            APN}&ibi=${
-            IBI}&isi=${
-            ISI}&ius=${
-            IUS}&efr=1`;
+        return `${domain}/?link=${encodeURIComponent(
+            window.location.href
+        )}&apn=${APN}&ibi=${IBI}&isi=${ISI}&ius=${IUS}&efr=1`;
     }
 
     _onDownloadApp: () => void;
@@ -220,8 +211,10 @@ class DeepLinkingMobilePage extends Component<Props> {
      */
     _onDownloadApp() {
         sendAnalytics(
-            createDeepLinkingPageEvent(
-                'clicked', 'downloadAppButton', { isMobileBrowser: true }));
+            createDeepLinkingPageEvent("clicked", "downloadAppButton", {
+                isMobileBrowser: true,
+            })
+        );
     }
 
     _onLaunchWeb: () => void;
@@ -233,8 +226,10 @@ class DeepLinkingMobilePage extends Component<Props> {
      */
     _onLaunchWeb() {
         sendAnalytics(
-            createDeepLinkingPageEvent(
-                'clicked', 'launchWebButton', { isMobileBrowser: true }));
+            createDeepLinkingPageEvent("clicked", "launchWebButton", {
+                isMobileBrowser: true,
+            })
+        );
         this.props.dispatch(openWebApp());
     }
 
@@ -248,8 +243,10 @@ class DeepLinkingMobilePage extends Component<Props> {
      */
     _onOpenApp() {
         sendAnalytics(
-            createDeepLinkingPageEvent(
-                'clicked', 'openAppButton', { isMobileBrowser: true }));
+            createDeepLinkingPageEvent("clicked", "openAppButton", {
+                isMobileBrowser: true,
+            })
+        );
     }
 }
 
@@ -263,8 +260,11 @@ class DeepLinkingMobilePage extends Component<Props> {
  */
 function _mapStateToProps(state) {
     return {
-        _downloadUrl: interfaceConfig[`MOBILE_DOWNLOAD_LINK_${Platform.OS.toUpperCase()}`],
-        _room: decodeURIComponent(state['features/base/conference'].room)
+        _downloadUrl:
+            interfaceConfig[
+                `MOBILE_DOWNLOAD_LINK_${Platform.OS.toUpperCase()}`
+            ],
+        _room: decodeURIComponent(state["features/base/conference"].room),
     };
 }
 
