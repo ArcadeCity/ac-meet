@@ -192,9 +192,9 @@ class WelcomePage extends AbstractWelcomePage {
                     <div className="header-text">
                         <h1 className="header-text-title">Connect freely.</h1>
                         <p className="header-text-description">
-                            Arcade City Meet is a free and 100% open source
-                            video-chat solution that you can use all day, every
-                            day, for free &mdash; with no account needed.
+                            Arcade City Meet is a simple video-chat app that you
+                            can use all day, every day, for free &mdash; with no
+                            account needed.
                         </p>
                     </div>
                     <div id="enter_room">
