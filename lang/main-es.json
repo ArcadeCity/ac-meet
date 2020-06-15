@@ -18,7 +18,7 @@
         "linkCopied": "Link copiado al portapapeles",
         "loading": "Buscando por contacto y número telefónico",
         "loadingNumber": "Validando el número telefónico",
-        "loadingPeople": "Buscando contactos a invitar",        
+        "loadingPeople": "Buscando contactos a invitar",
         "noResults": "No se encontraron coincidencias",
         "noValidNumbers": "Por favor ingrese un número de teléfono",
         "outlookEmail": "Correo de Outlook",
@@ -331,7 +331,7 @@
         "answer": "Contestar",
         "audioCallTitle": "Llamada entrante",
         "decline": "Descartar",
-        "productLabel": "de Jitsi Meet",
+        "productLabel": "de Arcade City Meet",
         "videoCallTitle": "Llamada de vídeo"
     },
     "info": {
@@ -488,7 +488,7 @@
         "newDeviceAudioTitle": "Se ha detectado un nuevo dispositivo de audio",
         "newDeviceAction": "Usar",
         "OldElectronAPPTitle": "Vulnerabilidades de Seguridad!",
-        "oldElectronClientDescription1": "Aparentemente usted está usuado una versión antigua de Jitsi Meet que tiene problemas de seguridad. Por favor actualice la versión con nuestra ",
+        "oldElectronClientDescription1": "Aparentemente usted está usuado una versión antigua de Arcade City Meet que tiene problemas de seguridad. Por favor actualice la versión con nuestra ",
         "oldElectronClientDescription2": "ultima versión",
         "oldElectronClientDescription3": " ahora!"
     },
