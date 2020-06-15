@@ -185,15 +185,15 @@ class DeepLinkingMobilePage extends Component<Props> {
         // interfaceConfig.MOBILE_DYNAMIC_LINK check:
         // https://firebase.google.com/docs/dynamic-links/create-manually
         const {
-            APN = "org.jitsi.meet",
+            APN = "arcade.city.mobile", // TODO: The app must be connected to your project from the Overview page of the Firebase console.
             APP_CODE = "w2atb",
             CUSTOM_DOMAIN = undefined,
-            IBI = "com.atlassian.JitsiMeet.ios",
-            ISI = "1165103905",
+            IBI = "arcade.city.mobile",
+            ISI = "1082799882",
         } = interfaceConfig.MOBILE_DYNAMIC_LINK || {};
 
         const domain = CUSTOM_DOMAIN ?? `https://${APP_CODE}.app.goo.gl`;
-        const IUS = interfaceConfig.APP_SCHEME || "org.jitsi.meet";
+        const IUS = interfaceConfig.APP_SCHEME || "arcade.city.mobile";
 
         return `${domain}/?link=${encodeURIComponent(
             window.location.href
