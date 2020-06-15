@@ -1,24 +1,24 @@
 /* global interfaceConfig */
 
-import React from 'react';
+import React from "react";
 
-import { isMobileBrowser } from '../../base/environment/utils';
-import { translate } from '../../base/i18n';
-import { Icon, IconWarning } from '../../base/icons';
-import { Watermarks } from '../../base/react';
-import { connect } from '../../base/redux';
-import { CalendarList } from '../../calendar-sync';
-import { RecentList } from '../../recent-list';
-import { SettingsButton, SETTINGS_TABS } from '../../settings';
+import { isMobileBrowser } from "../../base/environment/utils";
+import { translate } from "../../base/i18n";
+import { Icon, IconWarning } from "../../base/icons";
+import { Watermarks } from "../../base/react";
+import { connect } from "../../base/redux";
+import { CalendarList } from "../../calendar-sync";
+import { RecentList } from "../../recent-list";
+import { SettingsButton, SETTINGS_TABS } from "../../settings";
 
-import { AbstractWelcomePage, _mapStateToProps } from './AbstractWelcomePage';
-import Tabs from './Tabs';
+import { AbstractWelcomePage, _mapStateToProps } from "./AbstractWelcomePage";
+import Tabs from "./Tabs";
 
 /**
  * The pattern used to validate room name.
  * @type {string}
  */
-export const ROOM_NAME_VALIDATE_PATTERN_STR = '^[^?&:\u0022\u0027%#]+$';
+export const ROOM_NAME_VALIDATE_PATTERN_STR = "^[^?&:\u0022\u0027%#]+$";
 
 /**
  * Maximum number of pixels corresponding to a mobile layout.
@@ -38,7 +38,7 @@ class WelcomePage extends AbstractWelcomePage {
      * @static
      */
     static defaultProps = {
-        _room: ''
+        _room: "",
     };
 
     /**
@@ -55,7 +55,7 @@ class WelcomePage extends AbstractWelcomePage {
 
             generateRoomnames:
                 interfaceConfig.GENERATE_ROOMNAMES_ON_WELCOME_PAGE,
-            selectedTab: 0
+            selectedTab: 0,
         };
 
         /**
@@ -86,7 +86,8 @@ class WelcomePage extends AbstractWelcomePage {
          * @type {HTMLTemplateElement|null}
          */
         this._additionalContentTemplate = document.getElementById(
-            'welcome-page-additional-content-template');
+            "welcome-page-additional-content-template"
+        );
 
         /**
          * The template to use as the additional content for the welcome page header toolbar.
@@ -96,17 +97,19 @@ class WelcomePage extends AbstractWelcomePage {
          * @type {HTMLTemplateElement|null}
          */
         this._additionalToolbarContentTemplate = document.getElementById(
-            'settings-toolbar-additional-content-template'
+            "settings-toolbar-additional-content-template"
         );
 
         // Bind event handlers so they are only bound once per instance.
         this._onFormSubmit = this._onFormSubmit.bind(this);
         this._onRoomChange = this._onRoomChange.bind(this);
-        this._setAdditionalContentRef
-            = this._setAdditionalContentRef.bind(this);
+        this._setAdditionalContentRef = this._setAdditionalContentRef.bind(
+            this
+        );
         this._setRoomInputRef = this._setRoomInputRef.bind(this);
-        this._setAdditionalToolbarContentRef
-            = this._setAdditionalToolbarContentRef.bind(this);
+        this._setAdditionalToolbarContentRef = this._setAdditionalToolbarContentRef.bind(
+            this
+        );
         this._onTabSelected = this._onTabSelected.bind(this);
     }
 
@@ -120,7 +123,7 @@ class WelcomePage extends AbstractWelcomePage {
     componentDidMount() {
         super.componentDidMount();
 
-        document.body.classList.add('welcome-page');
+        document.body.classList.add("welcome-page");
         document.title = interfaceConfig.APP_NAME;
 
         if (this.state.generateRoomnames) {
@@ -129,7 +132,8 @@ class WelcomePage extends AbstractWelcomePage {
 
         if (this._shouldShowAdditionalContent()) {
             this._additionalContentRef.appendChild(
-                this._additionalContentTemplate.content.cloneNode(true));
+                this._additionalContentTemplate.content.cloneNode(true)
+            );
         }
 
         if (this._shouldShowAdditionalToolbarContent()) {
@@ -148,7 +152,7 @@ class WelcomePage extends AbstractWelcomePage {
     componentWillUnmount() {
         super.componentWillUnmount();
 
-        document.body.classList.remove('welcome-page');
+        document.body.classList.remove("welcome-page");
     }
 
     /**
@@ -166,71 +170,74 @@ class WelcomePage extends AbstractWelcomePage {
 
         return (
             <div
-                className = { `welcome ${showAdditionalContent
-                    ? 'with-content' : 'without-content'}` }
-                id = 'welcome_page'>
-                <div className = 'welcome-watermark'>
+                className={`welcome ${
+                    showAdditionalContent ? "with-content" : "without-content"
+                }`}
+                id="welcome_page"
+            >
+                <div className="welcome-watermark">
                     <Watermarks />
                 </div>
-                <div className = 'header'>
-                    <div className = 'welcome-page-settings'>
-                        <SettingsButton
-                            defaultTab = { SETTINGS_TABS.CALENDAR } />
-                        { showAdditionalToolbarContent
-                            ? <div
-                                className = 'settings-toolbar-content'
-                                ref = { this._setAdditionalToolbarContentRef } />
-                            : null
-                        }
+                <div className="header">
+                    <div className="welcome-page-settings">
+                        <SettingsButton defaultTab={SETTINGS_TABS.CALENDAR} />
+                        {showAdditionalToolbarContent ? (
+                            <div
+                                className="settings-toolbar-content"
+                                ref={this._setAdditionalToolbarContentRef}
+                            />
+                        ) : null}
                     </div>
-                    <div className = 'header-image' />
-                    <div className = 'header-text'>
-                        <h1 className = 'header-text-title'>
-                            { t('welcomepage.title') }
-                        </h1>
-                        <p className = 'header-text-description'>
-                            { t('welcomepage.appDescription',
-                                { app: APP_NAME }) }
+                    <div className="header-image" />
+                    <div className="header-text">
+                        <h1 className="header-text-title">Connect freely.</h1>
+                        <p className="header-text-description">
+                            Arcade City Meet is a free and 100% open source
+                            video-chat solution that you can use all day, every
+                            day, for free &mdash; with no account needed.
                         </p>
                     </div>
-                    <div id = 'enter_room'>
-                        <div className = 'enter-room-input-container'>
-                            <div className = 'enter-room-title'>
-                                { t('welcomepage.enterRoomTitle') }
+                    <div id="enter_room">
+                        <div className="enter-room-input-container">
+                            <div className="enter-room-title">
+                                {t("welcomepage.enterRoomTitle")}
                             </div>
-                            <form onSubmit = { this._onFormSubmit }>
+                            <form onSubmit={this._onFormSubmit}>
                                 <input
-                                    autoFocus = { true }
-                                    className = 'enter-room-input'
-                                    id = 'enter_room_field'
-                                    onChange = { this._onRoomChange }
-                                    pattern = { ROOM_NAME_VALIDATE_PATTERN_STR }
-                                    placeholder = { this.state.roomPlaceholder }
-                                    ref = { this._setRoomInputRef }
-                                    title = { t('welcomepage.roomNameAllowedChars') }
-                                    type = 'text'
-                                    value = { this.state.room } />
-                                { this._renderInsecureRoomNameWarning() }
+                                    autoFocus={true}
+                                    className="enter-room-input"
+                                    id="enter_room_field"
+                                    onChange={this._onRoomChange}
+                                    pattern={ROOM_NAME_VALIDATE_PATTERN_STR}
+                                    placeholder={this.state.roomPlaceholder}
+                                    ref={this._setRoomInputRef}
+                                    title={t(
+                                        "welcomepage.roomNameAllowedChars"
+                                    )}
+                                    type="text"
+                                    value={this.state.room}
+                                />
+                                {this._renderInsecureRoomNameWarning()}
                             </form>
                         </div>
                         <div
-                            className = 'welcome-page-button'
-                            id = 'enter_room_button'
-                            onClick = { this._onFormSubmit }>
-                            {
-                                showResponsiveText
-                                    ? t('welcomepage.goSmall')
-                                    : t('welcomepage.go')
-                            }
+                            className="welcome-page-button"
+                            id="enter_room_button"
+                            onClick={this._onFormSubmit}
+                        >
+                            {showResponsiveText
+                                ? t("welcomepage.goSmall")
+                                : t("welcomepage.go")}
                         </div>
                     </div>
-                    { this._renderTabs() }
+                    {this._renderTabs()}
                 </div>
-                { showAdditionalContent
-                    ? <div
-                        className = 'welcome-page-content'
-                        ref = { this._setAdditionalContentRef } />
-                    : null }
+                {showAdditionalContent ? (
+                    <div
+                        className="welcome-page-content"
+                        ref={this._setAdditionalContentRef}
+                    />
+                ) : null}
             </div>
         );
     }
@@ -242,11 +249,9 @@ class WelcomePage extends AbstractWelcomePage {
      */
     _doRenderInsecureRoomNameWarning() {
         return (
-            <div className = 'insecure-room-name-warning'>
-                <Icon src = { IconWarning } />
-                <span>
-                    { this.props.t('security.insecureRoomNameWarning') }
-                </span>
+            <div className="insecure-room-name-warning">
+                <Icon src={IconWarning} />
+                <span>{this.props.t("security.insecureRoomNameWarning")}</span>
             </div>
         );
     }
@@ -309,15 +314,15 @@ class WelcomePage extends AbstractWelcomePage {
 
         if (_calendarEnabled) {
             tabs.push({
-                label: t('welcomepage.calendar'),
-                content: <CalendarList />
+                label: t("welcomepage.calendar"),
+                content: <CalendarList />,
             });
         }
 
         if (_recentListEnabled) {
             tabs.push({
-                label: t('welcomepage.recentList'),
-                content: <RecentList />
+                label: t("welcomepage.recentList"),
+                content: <RecentList />,
             });
         }
 
@@ -327,9 +332,11 @@ class WelcomePage extends AbstractWelcomePage {
 
         return (
             <Tabs
-                onSelect = { this._onTabSelected }
-                selected = { this.state.selectedTab }
-                tabs = { tabs } />);
+                onSelect={this._onTabSelected}
+                selected={this.state.selectedTab}
+                tabs={tabs}
+            />
+        );
     }
 
     /**
@@ -378,10 +385,12 @@ class WelcomePage extends AbstractWelcomePage {
      * @returns {boolean}
      */
     _shouldShowAdditionalContent() {
-        return interfaceConfig.DISPLAY_WELCOME_PAGE_CONTENT
-            && this._additionalContentTemplate
-            && this._additionalContentTemplate.content
-            && this._additionalContentTemplate.innerHTML.trim();
+        return (
+            interfaceConfig.DISPLAY_WELCOME_PAGE_CONTENT &&
+            this._additionalContentTemplate &&
+            this._additionalContentTemplate.content &&
+            this._additionalContentTemplate.innerHTML.trim()
+        );
     }
 
     /**
@@ -392,10 +401,12 @@ class WelcomePage extends AbstractWelcomePage {
      * @returns {boolean}
      */
     _shouldShowAdditionalToolbarContent() {
-        return interfaceConfig.DISPLAY_WELCOME_PAGE_TOOLBAR_ADDITIONAL_CONTENT
-            && this._additionalToolbarContentTemplate
-            && this._additionalToolbarContentTemplate.content
-            && this._additionalToolbarContentTemplate.innerHTML.trim();
+        return (
+            interfaceConfig.DISPLAY_WELCOME_PAGE_TOOLBAR_ADDITIONAL_CONTENT &&
+            this._additionalToolbarContentTemplate &&
+            this._additionalToolbarContentTemplate.content &&
+            this._additionalToolbarContentTemplate.innerHTML.trim()
+        );
     }
 
     /**
@@ -410,7 +421,6 @@ class WelcomePage extends AbstractWelcomePage {
 
         return innerWidth <= WINDOW_WIDTH_THRESHOLD;
     }
-
 }
 
 export default translate(connect(_mapStateToProps)(WelcomePage));
