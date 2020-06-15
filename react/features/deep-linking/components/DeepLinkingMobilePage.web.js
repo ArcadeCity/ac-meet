@@ -192,7 +192,8 @@ class DeepLinkingMobilePage extends Component<Props> {
             ISI = "1082799882",
         } = interfaceConfig.MOBILE_DYNAMIC_LINK || {};
 
-        const domain = CUSTOM_DOMAIN ?? `https://${APP_CODE}.app.goo.gl`;
+        // const domain = CUSTOM_DOMAIN ?? `https://${APP_CODE}.app.goo.gl`;
+        const domain = "https://link.arcade.city/app";
         const IUS = interfaceConfig.APP_SCHEME || "arcade.city.mobile";
 
         return `${domain}/?link=${encodeURIComponent(
